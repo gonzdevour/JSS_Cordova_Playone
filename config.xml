@@ -36,6 +36,8 @@
 	<icon src="www/icons/50x50.png" width="50" height="50" />
 	<icon src="www/icons/100x100.png" width="100" height="100" />
 	
+	<splash src="www/Splash2208x1242.png" />
+	
 	<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
     <string>need camera access to take pictures</string>
 	</edit-config>
@@ -74,6 +76,7 @@
 	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-whitelist" />
+	<plugin name="cordova-plugin-splashscreen" />
 	<plugin name="cordova-plugin-dialogs" source="npm" />
 	<plugin name="cordova-plugin-password-dialog" source="npm" />
 	<plugin name="cordova-plugin-pin-dialog" source="npm" />
