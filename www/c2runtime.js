@@ -16238,6 +16238,205 @@ cr.plugins_.Button = function(runtime)
 }());
 ;
 ;
+cr.plugins_.Function = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var pluginProto = cr.plugins_.Function.prototype;
+	pluginProto.Type = function(plugin)
+	{
+		this.plugin = plugin;
+		this.runtime = plugin.runtime;
+	};
+	var typeProto = pluginProto.Type.prototype;
+	typeProto.onCreate = function()
+	{
+	};
+	pluginProto.Instance = function(type)
+	{
+		this.type = type;
+		this.runtime = type.runtime;
+	};
+	var instanceProto = pluginProto.Instance.prototype;
+	var funcStack = [];
+	var funcStackPtr = -1;
+	var isInPreview = false;	// set in onCreate
+	function FuncStackEntry()
+	{
+		this.name = "";
+		this.retVal = 0;
+		this.params = [];
+	};
+	function pushFuncStack()
+	{
+		funcStackPtr++;
+		if (funcStackPtr === funcStack.length)
+			funcStack.push(new FuncStackEntry());
+		return funcStack[funcStackPtr];
+	};
+	function getCurrentFuncStack()
+	{
+		if (funcStackPtr < 0)
+			return null;
+		return funcStack[funcStackPtr];
+	};
+	function getOneAboveFuncStack()
+	{
+		if (!funcStack.length)
+			return null;
+		var i = funcStackPtr + 1;
+		if (i >= funcStack.length)
+			i = funcStack.length - 1;
+		return funcStack[i];
+	};
+	function popFuncStack()
+	{
+;
+		funcStackPtr--;
+	};
+	instanceProto.onCreate = function()
+	{
+		isInPreview = (typeof cr_is_preview !== "undefined");
+		var self = this;
+		window["c2_callFunction"] = function (name_, params_)
+		{
+			var i, len, v;
+			var fs = pushFuncStack();
+			fs.name = name_.toLowerCase();
+			fs.retVal = 0;
+			if (params_)
+			{
+				fs.params.length = params_.length;
+				for (i = 0, len = params_.length; i < len; ++i)
+				{
+					v = params_[i];
+					if (typeof v === "number" || typeof v === "string")
+						fs.params[i] = v;
+					else if (typeof v === "boolean")
+						fs.params[i] = (v ? 1 : 0);
+					else
+						fs.params[i] = 0;
+				}
+			}
+			else
+			{
+				cr.clearArray(fs.params);
+			}
+			self.runtime.trigger(cr.plugins_.Function.prototype.cnds.OnFunction, self, fs.name);
+			popFuncStack();
+			return fs.retVal;
+		};
+	};
+	function Cnds() {};
+	Cnds.prototype.OnFunction = function (name_)
+	{
+		var fs = getCurrentFuncStack();
+		if (!fs)
+			return false;
+		return cr.equals_nocase(name_, fs.name);
+	};
+	Cnds.prototype.CompareParam = function (index_, cmp_, value_)
+	{
+		var fs = getCurrentFuncStack();
+		if (!fs)
+			return false;
+		index_ = cr.floor(index_);
+		if (index_ < 0 || index_ >= fs.params.length)
+			return false;
+		return cr.do_cmp(fs.params[index_], cmp_, value_);
+	};
+	pluginProto.cnds = new Cnds();
+	function Acts() {};
+	Acts.prototype.CallFunction = function (name_, params_)
+	{
+		var fs = pushFuncStack();
+		fs.name = name_.toLowerCase();
+		fs.retVal = 0;
+		cr.shallowAssignArray(fs.params, params_);
+		var ran = this.runtime.trigger(cr.plugins_.Function.prototype.cnds.OnFunction, this, fs.name);
+		if (isInPreview && !ran)
+		{
+;
+		}
+		popFuncStack();
+	};
+	Acts.prototype.SetReturnValue = function (value_)
+	{
+		var fs = getCurrentFuncStack();
+		if (fs)
+			fs.retVal = value_;
+		else
+;
+	};
+	Acts.prototype.CallExpression = function (unused)
+	{
+	};
+	pluginProto.acts = new Acts();
+	function Exps() {};
+	Exps.prototype.ReturnValue = function (ret)
+	{
+		var fs = getOneAboveFuncStack();
+		if (fs)
+			ret.set_any(fs.retVal);
+		else
+			ret.set_int(0);
+	};
+	Exps.prototype.ParamCount = function (ret)
+	{
+		var fs = getCurrentFuncStack();
+		if (fs)
+			ret.set_int(fs.params.length);
+		else
+		{
+;
+			ret.set_int(0);
+		}
+	};
+	Exps.prototype.Param = function (ret, index_)
+	{
+		index_ = cr.floor(index_);
+		var fs = getCurrentFuncStack();
+		if (fs)
+		{
+			if (index_ >= 0 && index_ < fs.params.length)
+			{
+				ret.set_any(fs.params[index_]);
+			}
+			else
+			{
+;
+				ret.set_int(0);
+			}
+		}
+		else
+		{
+;
+			ret.set_int(0);
+		}
+	};
+	Exps.prototype.Call = function (ret, name_)
+	{
+		var fs = pushFuncStack();
+		fs.name = name_.toLowerCase();
+		fs.retVal = 0;
+		cr.clearArray(fs.params);
+		var i, len;
+		for (i = 2, len = arguments.length; i < len; i++)
+			fs.params.push(arguments[i]);
+		var ran = this.runtime.trigger(cr.plugins_.Function.prototype.cnds.OnFunction, this, fs.name);
+		if (isInPreview && !ran)
+		{
+;
+		}
+		popFuncStack();
+		ret.set_any(fs.retVal);
+	};
+	pluginProto.exps = new Exps();
+}());
+;
+;
 cr.plugins_.Rex_Hash = function(runtime)
 {
 	this.runtime = runtime;
@@ -17402,6 +17601,306 @@ cr.plugins_.Rex_canvas = function(runtime)
         var inflate = new window["Zlib"]["Inflate"](d);
         var plain = inflate["decompress"]();
         return plain;
+	};
+}());
+;
+;
+cr.plugins_.Rex_fnCallPkg = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var pluginProto = cr.plugins_.Rex_fnCallPkg.prototype;
+	pluginProto.Type = function(plugin)
+	{
+		this.plugin = plugin;
+		this.runtime = plugin.runtime;
+	};
+	var typeProto = pluginProto.Type.prototype;
+	typeProto.onCreate = function()
+	{
+	};
+	pluginProto.Instance = function(type)
+	{
+		this.type = type;
+		this.runtime = type.runtime;
+	};
+	var instanceProto = pluginProto.Instance.prototype;
+	instanceProto.onCreate = function()
+	{
+        this.c2FnType = null;
+        this.fnQueue = [];
+        this.exp_pkg = null;
+	};
+	instanceProto.onDestroy = function ()
+	{
+	};
+	instanceProto.getC2FnType = function ()
+	{
+        if (this.c2FnType === null)
+        {
+            if (window["c2_callRexFunction2"])
+                this.c2FnType = "c2_callRexFunction2";
+            else if (window["c2_callFunction"])
+                this.c2FnType = "c2_callFunction";
+            else
+                this.c2FnType = "";
+        }
+        return this.c2FnType;
+	};
+    instanceProto.callC2Fn = function (pkg)
+    {
+		var params = [];
+        var c2FnGlobalName = this.getC2FnType();
+        if (c2FnGlobalName === "")
+            return 0;
+        var c2FnName = pkg[0];
+        var i, cnt=pkg.length;
+        for(i=1; i<cnt; i++)
+        {
+            params.push( pkg[i] );
+        }
+        var retValue = window[c2FnGlobalName](c2FnName, params);
+        return retValue;
+    };
+	instanceProto.executePackage = function(pkg, isReverse)
+	{
+        if (this.getC2FnType() === "")
+	        return;
+        var retVal;
+        var isOneFunction = (typeof(pkg[0]) == "string");
+        if (isOneFunction)
+        {
+            retVal = this.callC2Fn(pkg);
+        }
+        else
+        {
+            var i,cnt=pkg.length;
+            if (isReverse !== 1)
+            {
+                for(i=0; i<cnt; i++)
+                {
+                    retVal = this.callC2Fn(pkg[i]);
+                }
+            }
+            else
+            {
+                for(i=cnt-1; i>=0; i--)
+                {
+                    retVal = this.callC2Fn(pkg[i]);
+                }
+            }
+        }
+        return retVal;
+	};
+    instanceProto.saveToJSON = function ()
+    {
+        return { "fq" : this.fnQueue,
+                };
+    };
+    instanceProto.loadFromJSON = function (o)
+    {
+		this.c2FnType = null;
+        this.fnQueue = o["fq"]
+    };
+	function Cnds() {};
+	pluginProto.cnds = new Cnds();
+	Cnds.prototype.ForEachPkg = function ()
+	{
+	    var i,cnt=this.fnQueue.length;
+        var current_frame = this.runtime.getCurrentEventStack();
+        var current_event = current_frame.current_event;
+		var solModifierAfterCnds = current_frame.isModifierAfterCnds();
+        for (i=0; i<cnt; i++)
+        {
+            if (solModifierAfterCnds)
+                this.runtime.pushCopySol(current_event.solModifiers);
+            this.exp_pkg = this.fnQueue[i];
+            current_event.retrigger();
+            if (solModifierAfterCnds)
+			    this.runtime.popSol(current_event.solModifiers);
+        }
+	    this.exp_pkg = null;
+		return false;
+	};
+	Cnds.prototype.IsCurName = function (name_)
+	{
+	    if (this.exp_pkg == null)
+		    return false;
+		return cr.equals_nocase(name_, this.exp_pkg[0]);
+	};
+	function Acts() {};
+	pluginProto.acts = new Acts();
+    Acts.prototype.CallFunction = function (pkg, isReverse)
+	{
+        if (pkg == "")
+            return;
+		try {
+			pkg = JSON.parse(pkg);
+		}
+		catch(e) { return; }
+		this.executePackage(pkg, isReverse);
+	};
+    Acts.prototype.CleanFnQueue = function ()
+	{
+		this.fnQueue.length = 0;
+	};
+    Acts.prototype.PushToFnQueue = function (name, params)
+	{
+		Acts.prototype.PushToFnQueue2.call(this, 0, name, params);
+	};
+    Acts.prototype.LoadFnQueue = function (pkg)
+	{
+		Acts.prototype.CleanFnQueue.call(this);
+        Acts.prototype.AppendFnQueue.call(this, pkg);
+	};
+    Acts.prototype.OverwriteParam = function (index_, value_)
+	{
+	    var pkg = this.exp_pkg || this.fnQueue[0];
+	    if (pkg == null)
+	    {
+	        return;
+	    }
+	    var paramCnt = pkg.length -1;
+	    var paramIndex = index_+1;
+	    if (index_ >= paramCnt)
+	    {
+	        pkg.length = paramIndex+1;
+	        var i;
+	        for (i=paramCnt+1; i<paramIndex; i++)
+	        {
+	            pkg[i] = 0;
+	        }
+	    }
+	    pkg[paramIndex] = value_;
+	};
+    Acts.prototype.CallFunctionInQueue = function (isReverse)
+	{
+	    this.executePackage(this.fnQueue, isReverse);
+	};
+    Acts.prototype.PushToFnQueue2 = function (where, name, params)
+	{
+        var pkg = [name];
+        var i, cnt=params.length;
+        pkg.length = cnt+1;
+        for(i=0; i<cnt; i++)
+        {
+            pkg[i+1] = params[i];
+        }
+        if (where == 0)
+	        this.fnQueue.push(pkg);
+	    else
+	        this.fnQueue.unshift(pkg);
+	};
+    Acts.prototype.ReverseFnQueue = function ()
+	{
+        this.fnQueue.reverse();
+	};
+    Acts.prototype.InsertParam = function (index_, param_)
+	{
+	    var pkg = this.exp_pkg || this.fnQueue[0];
+	    if (pkg == null)
+	    {
+	        return;
+	    }
+        pkg.splice(index_+1, 0, param_);
+	};
+    Acts.prototype.AddToParam = function (index_, value_)
+	{
+	    var pkg = this.exp_pkg || this.fnQueue[0];
+	    if (pkg == null)
+	    {
+	        return;
+	    }
+	    var paramCnt = pkg.length -1;
+	    var paramIndex = index_+1;
+	    if (index_ >= paramCnt)
+	    {
+	        pkg.length = paramIndex+1;
+	        var i;
+	        for (i=paramCnt+1; i<paramIndex; i++)
+	        {
+	            pkg[i] = 0;
+	        }
+	    }
+	    pkg[paramIndex] += value_;
+	};
+    Acts.prototype.AppendFnQueue = function (pkg)
+	{
+        if (pkg == "")
+            return;
+		try {
+			pkg = JSON.parse(pkg);
+		}
+		catch(e) { return; }
+		var isOneFunction = (typeof(pkg[0]) == "string");
+		if (isOneFunction)
+		{
+		    this.fnQueue.push(pkg);
+		}
+		else
+		{
+		    this.fnQueue.push.apply(this.fnQueue, pkg);
+		}
+	};
+    Acts.prototype.SetupCallback = function (callback_type)
+	{
+        this.c2FnType = (callback_type===0)? "c2_callFunction" : "c2_callRexFunction2";
+	};
+	function Exps() {};
+	pluginProto.exps = new Exps();
+    var pkg=[];
+    Exps.prototype.FnCallPkg = function (ret)
+	{
+		var i, cnt=arguments.length;
+		for (i=1; i < cnt; i++)
+		    pkg.push(arguments[i]);
+		var s = JSON.stringify(pkg);
+		pkg.length = 0;
+	    ret.set_string( s );
+	};
+    Exps.prototype.Call = function (ret, pkg, isReverse)
+	{
+        var retVal = null;
+        if (pkg == "")
+            retVal = 0;
+        else
+        {
+		    try
+            {
+		    	pkg = JSON.parse(pkg);
+		    }
+		    catch(e)
+		    {
+		         retVal = 0;
+	        }
+            if (retVal === null)
+		        retVal = this.executePackage(pkg, isReverse);
+        }
+	    ret.set_any( retVal );
+	};
+    Exps.prototype.FnQueuePkg = function (ret)
+	{
+	    ret.set_string( JSON.stringify(this.fnQueue) );
+	};
+    Exps.prototype.CurName = function (ret)
+	{
+	    var n = (this.exp_pkg == null)? "" : this.exp_pkg[0];
+	    ret.set_string( n );
+	};
+    Exps.prototype.CurParam = function (ret, index_)
+	{
+	    var p;
+	    if (this.exp_pkg == null)
+	        p = 0;
+	    else
+	    {
+	        p = this.exp_pkg[index_ + 1];
+	        if (p == null)
+	            p = 0;
+	    }
+	    ret.set_any( p );
 	};
 }());
 ;
@@ -21338,6 +21837,451 @@ cr.plugins_.rex_TouchWrap = function(runtime)
 }());
 ;
 ;
+cr.behaviors.Rex_Button2 = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var behaviorProto = cr.behaviors.Rex_Button2.prototype;
+	behaviorProto.Type = function(behavior, objtype)
+	{
+		this.behavior = behavior;
+		this.objtype = objtype;
+		this.runtime = behavior.runtime;
+	};
+	var behtypeProto = behaviorProto.Type.prototype;
+	behtypeProto.onCreate = function()
+	{
+        this.touchwrap = null;
+	};
+	behtypeProto.TouchWrapGet = function ()
+	{
+        if (this.touchwrap != null)
+            return;
+        var plugins = this.runtime.types;
+        var name, obj;
+        for (name in plugins)
+        {
+            obj = plugins[name].instances[0];
+            if ((obj != null) && (obj.check_name == "TOUCHWRAP"))
+            {
+                this.touchwrap = obj;
+                this.touchwrap.HookMe(this);
+                break;
+            }
+        }
+;
+	};
+	function GetThisBehavior(inst)
+	{
+		var i, len;
+		for (i = 0, len = inst.behavior_insts.length; i < len; i++)
+		{
+			if (inst.behavior_insts[i] instanceof behaviorProto.Instance)
+				return inst.behavior_insts[i];
+		}
+		return null;
+	};
+    var _touch_insts = [];
+	var _behavior_insts = [];
+    behtypeProto.OnTouchStart = function (touch_src, touchX, touchY)
+    {
+        _touch_insts.length = 0;
+        _behavior_insts.length = 0;
+        var insts = this.objtype.instances, inst;
+        var lx, ly;
+        var i, cnt=insts.length;
+        for (i=0; i<cnt; i++)
+        {
+            inst = insts[i];
+            inst.update_bbox();
+			lx = inst.layer.canvasToLayer(touchX, touchY, true);
+			ly = inst.layer.canvasToLayer(touchX, touchY, false);
+            if (inst.contains_pt(lx, ly))
+                _touch_insts.push(inst);
+        }
+        var touch_insts_cnt=_touch_insts.length
+        if (touch_insts_cnt === 0)
+        {
+            _touch_insts.length = 0;
+            _behavior_insts.length = 0;
+            return false;
+        }
+        var behavior_inst;
+        cnt = touch_insts_cnt;
+        _behavior_insts.length = 0;
+        for (i=0; i<cnt; i++ )
+        {
+		    inst = _touch_insts[i];
+		    if (!inst)
+		    {
+		        continue;
+		    }
+            behavior_inst = GetThisBehavior(inst);
+            if (behavior_inst == null)
+                continue;
+            if (behavior_inst.is_enable())
+			    _behavior_insts.push(behavior_inst);
+        }
+        cnt = _behavior_insts.length;
+		if (cnt === 0)  // no inst match
+        {
+            _touch_insts.length = 0;
+            _behavior_insts.length = 0;
+            return false;
+        }
+        var target_inst_behavior = _behavior_insts[0];
+        var instB=target_inst_behavior.inst, instA;
+        for (i=1; i<cnt; i++ )
+        {
+            behavior_inst = _behavior_insts[i];
+            instA = behavior_inst.inst;
+            if ( ( instA.layer.index > instB.layer.index) ||
+                 ( (instA.layer.index == instB.layer.index) && (instA.get_zindex() > instB.get_zindex()) ) )
+            {
+                target_inst_behavior = behavior_inst;
+                instB = instA;
+            }
+        }
+        _touch_insts.length = 0;
+        _behavior_insts.length = 0;
+		target_inst_behavior.start_click_detecting(touch_src);
+        return true;  // get drag inst
+    };
+    behtypeProto.OnTouchEnd = function (touch_src)
+    {
+		var insts = this.objtype.instances;
+        var i, cnt=insts.length, inst, behavior_inst;
+        for (i=0; i<cnt; i++ )
+        {
+		    inst = insts[i];
+		    if (!inst)
+		    {
+		        continue;
+		    }
+            behavior_inst = GetThisBehavior(inst);
+            if (behavior_inst == null)
+                continue;
+			if ((behavior_inst.touchSrc == touch_src) && (behavior_inst.buttonState == CLICK_DETECTING_STATE))
+                behavior_inst.finish_click_detecting();
+        }
+    };
+	behaviorProto.Instance = function(type, inst)
+	{
+		this.type = type;
+		this.behavior = type.behavior;
+		this.inst = inst;				// associated object instance to modify
+		this.runtime = type.runtime;
+        type.TouchWrapGet();
+	};
+	var behinstProto = behaviorProto.Instance.prototype;
+    var OFF_STATE = 0;
+    var INACTIVE_STATE = 1;
+    var ACTIVE_STATE = 2;
+    var CLICK_DETECTING_STATE = 3;
+    var CLICKED_STATE = 4;
+    var state2name = ["OFF","INACTIVE","ACTIVE","CLICK DETECTING","CLICKED"];
+    var NORMAL_DISPLAY = 0;
+    var CLICKED_DISPLAY = 1;
+    var INACTIVE_DISPLAY = 2;
+    var ROLLINGIN_DISPLAY = 3;
+	behinstProto.onCreate = function()
+	{
+	    this.initActivated = (this.properties[0]==1);
+        this.clickMode = this.properties[1];
+        this.isAutoCLICK2ACTIVE = (this.properties[2]==1);
+		this.isVisibleChecking = (this.properties[3]==1);
+        this.touchSrc = null;
+        this.buttonState = OFF_STATE;
+        this.buttonPreState = null;
+        this.initFlag = true;
+        this.rollingoverFlag = false;
+        this.displayAnim = {normal:"",
+                         click:"",
+                         inactive:"",
+                         rollingin:"",
+                         frameSpeedSave:0,
+                         cur_name:null};
+        this.isSetStateInAction = false;
+	};
+	behinstProto.tick = function ()
+	{
+        this._init();
+        if (this.buttonState == INACTIVE_STATE)
+            return;
+        var is_touch_inside = this._is_touch_inside();
+        this._check_click_cancel(is_touch_inside);
+        this._check_rollingover(is_touch_inside);
+	};
+	behinstProto.is_enable = function()
+	{
+	    var is_visible;
+	    if (this.isVisibleChecking)
+		{
+	        var layer = this.runtime.getLayerByNumber(this.inst.layer.index);
+	        is_visible = (layer.visible && this.inst.visible);
+        }
+		else
+		    is_visible = true;
+        return ( (this.buttonState == ACTIVE_STATE) && is_visible );
+	};
+	behinstProto._display_frame = function(frame_index)
+	{
+        this.displayAnim.frameSpeedSave = this.inst.cur_anim_speed;
+        this.inst.cur_anim_speed = 0;
+        if (frame_index != null)
+            cr.plugins_.Sprite.prototype.acts.SetAnimFrame.apply(this.inst, [frame_index]);
+	};
+	behinstProto._display_animation = function(anim_name)
+	{
+        var frameSpeedSave = this.displayAnim.frameSpeedSave;
+        if (frameSpeedSave != null)
+            this.inst.cur_anim_speed = frameSpeedSave;
+        if (anim_name != "")
+            cr.plugins_.Sprite.prototype.acts.SetAnim.apply(this.inst, [anim_name, 1]);
+	};
+	behinstProto._set_animation = function(display, name)
+	{
+       if (typeof(display) == "number")
+       {
+           this._display_frame(display);
+       }
+       else if (display != "")
+       {
+           this._display_animation(display);
+       }
+       this.displayAnim.cur_name = name;
+	};
+	behinstProto._init = function()
+	{
+        if (!this.initFlag)
+            return;
+        this.displayAnim.frameSpeedSave = this.inst.cur_anim_speed;
+        if (this.initActivated != null)
+        {
+            if (this.initActivated)
+                this._goto_active_state();
+            else
+                this._goto_inactive_state();
+        }
+        this.initFlag = false;
+	};
+	behinstProto._is_touch_inside = function ()
+	{
+        var touchwrap = this.type.touchwrap;
+        var touch_x = this.GetTouchX();
+        var touch_y = this.GetTouchY();
+        this.inst.update_bbox();
+        return this.inst.contains_pt(touch_x, touch_y);
+	};
+	behinstProto._check_click_cancel = function (is_touch_inside)
+	{
+        if ((this.buttonState == CLICK_DETECTING_STATE) && (!is_touch_inside))
+        {
+            this.cancel_click_detecting();
+            this._goto_active_state();
+        }
+	};
+	behinstProto._check_rollingover = function (is_touch_inside)
+	{
+        if (is_touch_inside)
+        {
+            if (!this.rollingoverFlag)
+            {
+                this._set_animation(this.displayAnim.rollingin, ROLLINGIN_DISPLAY);
+                this.rollingoverFlag = true;
+                this.runtime.trigger(cr.behaviors.Rex_Button2.prototype.cnds.OnRollingIn, this.inst);
+            }
+        }
+        else
+        {
+            if (this.rollingoverFlag)
+            {
+                this.rollingoverFlag = false;
+                if (this.displayAnim.cur_name == ROLLINGIN_DISPLAY)
+                    this._set_animation(this.displayAnim.normal, NORMAL_DISPLAY);
+                this.runtime.trigger(cr.behaviors.Rex_Button2.prototype.cnds.OnRollingOut, this.inst);
+            }
+        }
+	};
+	behinstProto._set_state = function (state)
+	{
+	    this.buttonPreState = this.buttonState;
+        this.buttonState = state;
+	};
+	behinstProto.start_click_detecting = function (touch_src)
+	{
+        if (this.clickMode == 0)
+        {
+            this.touchSrc = touch_src;
+            this._set_state(CLICK_DETECTING_STATE);
+            this.runtime.trigger(cr.behaviors.Rex_Button2.prototype.cnds.OnClickStart, this.inst);
+        }
+        else
+            this.finish_click_detecting();
+	};
+	behinstProto._goto_active_state = function ()
+	{
+	    this.initActivated = null;
+        this.touchSrc = null;
+        this._set_state(ACTIVE_STATE);
+        this._set_animation(this.displayAnim.normal, NORMAL_DISPLAY);
+        this.runtime.trigger(cr.behaviors.Rex_Button2.prototype.cnds.OnActivated, this.inst);
+	};
+	behinstProto._goto_inactive_state = function ()
+	{
+	    this.initActivated = null;
+        this.touchSrc = null;
+        this._set_state(INACTIVE_STATE);
+        this._set_animation(this.displayAnim.inactive, INACTIVE_DISPLAY);
+        this.runtime.trigger(cr.behaviors.Rex_Button2.prototype.cnds.OnInactivated, this.inst);
+	};
+	behinstProto.cancel_click_detecting = function ()
+	{
+        this.runtime.trigger(cr.behaviors.Rex_Button2.prototype.cnds.OnClickCancel, this.inst);
+	};
+	behinstProto.finish_click_detecting = function ()
+	{
+        this._set_state(CLICKED_STATE);
+        this._set_animation(this.displayAnim.click, CLICKED_DISPLAY);
+        this.isSetStateInAction = false;
+        this.runtime.trigger(cr.behaviors.Rex_Button2.prototype.cnds.OnClick, this.inst);
+        if (this.isAutoCLICK2ACTIVE && !this.isSetStateInAction)
+        {
+            this._set_animation(this.displayAnim.normal, NORMAL_DISPLAY);
+            this._set_state(ACTIVE_STATE);
+        }
+	};
+	behinstProto.GetTouchX = function()
+	{
+        return this.type.touchwrap.XForID(this.touchSrc, this.inst.layer.index);
+	};
+	behinstProto.GetTouchY = function()
+	{
+        return this.type.touchwrap.YForID(this.touchSrc, this.inst.layer.index);
+	};
+	behinstProto.saveToJSON = function ()
+	{
+	    var activated = (this.buttonState != INACTIVE_STATE);
+		return { "en": activated,
+                 "fn": this.displayAnim.normal,
+                 "fc": this.displayAnim.click,
+                 "fi": this.displayAnim.inactive,
+                 "fr": this.displayAnim.rollingin};
+	};
+	behinstProto.loadFromJSON = function (o)
+	{
+		var activated = o["en"];
+		if (activated)
+		    this._goto_active_state();
+		else
+		    this._goto_inactive_state();
+        this.displayAnim.normal = o["fn"];
+        this.displayAnim.click = o["fc"];
+        this.displayAnim.inactive = o["fi"];
+        this.displayAnim.rollingin = o["fr"];
+	};
+	behinstProto._cmd_goto_state = function (state)
+	{
+	    if (state == this.buttonState)  // state does not change
+	        return;
+	    if (this.buttonState == CLICK_DETECTING_STATE)
+	        this.cancel_click_detecting();
+	    if (state == ACTIVE_STATE)
+	        this._goto_active_state();
+	    else
+	        this._goto_inactive_state();
+	};
+	function Cnds() {};
+	behaviorProto.cnds = new Cnds();
+	Cnds.prototype.OnClick = function ()
+	{
+        return true;
+	};
+	Cnds.prototype.OnClickCancel = function ()
+	{
+        return true;
+	};
+	Cnds.prototype.OnClickStart = function ()
+	{
+        return true;
+	};
+	Cnds.prototype.OnActivated = function ()
+	{
+        return true;
+	};
+	Cnds.prototype.OnInactivated = function ()
+	{
+        return true;
+	};
+	Cnds.prototype.OnRollingIn = function ()
+	{
+        return true;
+	};
+	Cnds.prototype.OnRollingOut = function ()
+	{
+        return true;
+	};
+	Cnds.prototype.IsEnable = function ()
+	{
+        return this.is_enable();
+	};
+	function Acts() {};
+	behaviorProto.acts = new Acts();
+	Acts.prototype.GotoACTIVE = function (_layer)
+	{
+        this.isSetStateInAction = true;
+	    var state = ACTIVE_STATE;
+	    if ((_layer!= null) && (this.inst.layer != _layer))
+	        state = INACTIVE_STATE;
+	    this._cmd_goto_state(state);
+	};
+	Acts.prototype.GotoINACTIVE = function (_layer)
+	{
+        this.isSetStateInAction = true;
+	    var state = INACTIVE_STATE;
+	    if ((_layer!= null) && (this.inst.layer != _layer))
+	        state = ACTIVE_STATE;
+	    this._cmd_goto_state(state);
+	};
+	Acts.prototype.SetDisplay = function (display_normal, display_click, display_inactive, display_rollingin)
+	{
+        this.displayAnim.normal = display_normal;
+        this.displayAnim.click = display_click;
+        this.displayAnim.inactive = display_inactive;
+        this.displayAnim.rollingin = display_rollingin;
+        this._init();
+	};
+	Acts.prototype.ManualTriggerCondition = function (condition_type)
+	{
+        var conds = cr.behaviors.Rex_Button2.prototype.cnds;
+        var trig;
+        switch (condition_type)
+        {
+        case 0: trig = conds.OnClick;        break;
+        case 1: trig = conds.OnClickCancel;  break;
+        case 2: trig = conds.OnClickStart;   break;
+        case 3: trig = conds.OnActivated;    break;
+        case 4: trig = conds.OnInactivated;  break;
+        case 5: trig = conds.OnRollingIn;    break;
+        case 6: trig = conds.OnRollingOut;   break;
+        }
+        this.runtime.trigger(trig, this.inst);
+	};
+	function Exps() {};
+	behaviorProto.exps = new Exps();
+	Exps.prototype.CurState = function (ret)
+	{
+	    ret.set_string(state2name[this.buttonState]);
+	};
+	Exps.prototype.PreState = function (ret)
+	{
+	    ret.set_string(state2name[this.buttonPreState]);
+	};
+}());
+;
+;
 cr.behaviors.scrollto = function(runtime)
 {
 	this.runtime = runtime;
@@ -21451,14 +22395,17 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Browser,
 	cr.plugins_.Button,
 	cr.plugins_.filechooser,
+	cr.plugins_.Function,
 	cr.plugins_.rex_TouchWrap,
 	cr.plugins_.Sprite,
 	cr.plugins_.Text,
 	cr.plugins_.Rex_canvas,
+	cr.plugins_.Rex_fnCallPkg,
 	cr.plugins_.Rex_jsshell,
 	cr.plugins_.Rex_JSONBuider,
 	cr.plugins_.Rex_Hash,
 	cr.behaviors.scrollto,
+	cr.behaviors.Rex_Button2,
 	cr.system_object.prototype.cnds.IsGroupActive,
 	cr.system_object.prototype.cnds.Every,
 	cr.system_object.prototype.acts.SetVar,
@@ -21490,11 +22437,19 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Rex_Hash.prototype.exps.AsJSON,
 	cr.system_object.prototype.cnds.IsOnPlatform,
 	cr.plugins_.Rex_canvas.prototype.acts.LoadURL,
+	cr.plugins_.Browser.prototype.acts.ExecJs,
+	cr.plugins_.Rex_jsshell.prototype.acts.AddObject,
 	cr.system_object.prototype.acts.Wait,
 	cr.plugins_.filechooser.prototype.cnds.OnChanged,
 	cr.plugins_.filechooser.prototype.exps.FileURLAt,
 	cr.plugins_.Browser.prototype.cnds.OnBackButton,
 	cr.system_object.prototype.exps.time,
 	cr.plugins_.Browser.prototype.acts.Close,
-	cr.system_object.prototype.cnds.Else
+	cr.system_object.prototype.cnds.Else,
+	cr.behaviors.Rex_Button2.prototype.cnds.OnClick,
+	cr.plugins_.Sprite.prototype.cnds.CompareInstanceVar,
+	cr.plugins_.Rex_fnCallPkg.prototype.acts.CallFunction,
+	cr.plugins_.Function.prototype.cnds.OnFunction,
+	cr.system_object.prototype.acts.GoToLayoutByName,
+	cr.plugins_.Function.prototype.exps.Param
 ];};
