@@ -39,11 +39,8 @@
 	<splash src="www/Splash.png" />
 	<preference name="SplashScreenDelay" value="5000" />
 	<preference name="ShowSplashScreenSpinner" value="false"/>
-	
-	<platform name="android">
-		<preference name="SplashMaintainAspectRatio" value="true" />
-		<preference name="SplashShowOnlyFirstTime" value="false" />
-	</platform>
+	<preference name="SplashMaintainAspectRatio" value="true" />
+	<preference name="SplashShowOnlyFirstTime" value="false" />
 	
 	<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
     <string>need camera access to take pictures</string>
