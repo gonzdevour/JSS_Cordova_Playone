@@ -66,7 +66,7 @@
 
 	<preference name="deployment-target" value="8.0" />
 	<preference name="android-minSdkVersion" value="21" />
-	<preference name="phonegap-version" value="cli-7.1.0" />
+	<preference name="phonegap-version" value="cli-8.0.0" />
 	<access origin="*" />
 
 	<plugin name="cordova-custom-config" />
@@ -80,7 +80,7 @@
 	<plugin name="cordova-plugin-dialogs" source="npm" />
 	<plugin name="cordova-plugin-password-dialog" source="npm" />
 	<plugin name="cordova-plugin-pin-dialog" source="npm" />
-	<plugin name="manateeworks-barcodescanner-v3" source="npm" />
+	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
 	<plugin name="cordova-plugin-market-ibby" source="npm" />
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-keyboard" source="npm" />
