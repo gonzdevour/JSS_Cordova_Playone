@@ -82,7 +82,7 @@
 
 	<preference name="deployment-target" value="8.0" />
 	<preference name="android-minSdkVersion" value="21" />
-	<preference name="phonegap-version" value="cli-7.0.1" />
+	<preference name="phonegap-version" value="cli-6.3.0" />
 	<access origin="*" />
 
 	<plugin name="cordova-custom-config" />
