@@ -42,7 +42,7 @@
 		<splash src="www/Default@2x~universal~anyany.png" />
 		<preference name="FadeSplashScreen" value="true"/>
 		<preference name="FadeSplashScreenDuration" value="500"/>
-		<preference name="ShowSplashScreenSpinner" value="ture"/>
+		<preference name="ShowSplashScreenSpinner" value="false"/>
 	</platform>
 	<!-- Android only -->
 	<platform name="android">
@@ -82,7 +82,7 @@
 
 	<preference name="deployment-target" value="8.0" />
 	<preference name="android-minSdkVersion" value="21" />
-	<preference name="phonegap-version" value="cli-7.0.1" />
+	<preference name="phonegap-version" value="cli-7.1.0" />
 	<access origin="*" />
 
 	<plugin name="cordova-custom-config" />
