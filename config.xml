@@ -4,8 +4,8 @@
 	<description>JSS_Cordova</description>
 	<author>playone</author>
 
-	<icon src="www/icon-256.png" width="256" height="256" density="xxxhdpi" />
-	<icon src="www/icon-128.png" width="128" height="128" density="xhdpi" />
+	<icon src="www/icons/icon-256.png" width="256" height="256" density="xxxhdpi" />
+	<icon src="www/icons/icon-128.png" width="128" height="128" density="xhdpi" />
 	<!-- iOS 8.0+ -->
 	<icon src="www/icons/1024x1024.png" width="1024" height="1024" />
 	<!-- iPhone 6 Plus  -->
