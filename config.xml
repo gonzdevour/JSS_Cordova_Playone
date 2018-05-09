@@ -80,7 +80,7 @@
 	<config-file parent="UIViewControllerBasedStatusBarAppearance" platform="ios" target="*-Info.plist"><false/></config-file>
 
 
-	<preference name="deployment-target" value="8.0" />
+	<preference name="deployment-target" value="11.0" />
 	<preference name="android-minSdkVersion" value="21" />
 	<preference name="phonegap-version" value="cli-7.1.0" />
 	<access origin="*" />
