@@ -4,104 +4,26 @@
 	<description>JSS_Cordova</description>
 	<author>playone</author>
 
-	<icon src="www/icons/icon-256.png" width="256" height="256" density="xxxhdpi" />
-	<icon src="www/icons/icon-128.png" width="128" height="128" density="xhdpi" />
-	<!-- iOS 8.0+ -->
-	<icon src="www/icons/1024x1024.png" width="1024" height="1024" />
-	<!-- iPhone 6 Plus  -->
-	<icon src="www/icons/180x180.png" width="180" height="180" />
-	<!-- iOS 7.0+ -->
-	<!-- iPhone / iPod Touch  -->
-	<icon src="www/icons/60x60.png" width="60" height="60" />
-	<icon src="www/icons/120x120.png" width="120" height="120" />
-	<!-- iPad -->
-	<icon src="www/icons/76x76.png" width="76" height="76" />
-	<icon src="www/icons/152x152.png" width="152" height="152" />
-	<!-- Spotlight Icon -->
-	<icon src="www/icons/40x40.png" width="40" height="40" />
-	<icon src="www/icons/80x80.png" width="80" height="80" />
-	<!-- iOS 6.1 -->
-	<!-- iPhone / iPod Touch -->
-	<icon src="www/icons/57x57.png" width="57" height="57" />
-	<icon src="www/icons/114x114.png" width="114" height="114" />
-	<!-- iPad -->
-	<icon src="www/icons/72x72.png" width="72" height="72" />
-	<icon src="www/icons/144x144.png" width="144" height="144" />
-	<!-- iPad Pro -->
-	<icon src="www/icons/167x167.png" width="167" height="167" />
-	<!-- iPhone Spotlight and Settings Icon -->
-	<icon src="www/icons/29x29.png" width="29" height="29" />
-	<icon src="www/icons/58x58.png" width="58" height="58" />
-	<!-- iPad Spotlight and Settings Icon -->
-	<icon src="www/icons/50x50.png" width="50" height="50" />
-	<icon src="www/icons/100x100.png" width="100" height="100" />
-	
-	<!-- Splashscreen Settings -->
-	<!-- iOS only -->
-	<platform name="ios">
-		<splash src="www/Default@2x~universal~anyany.png" />
-		<preference name="FadeSplashScreen" value="true"/>
-		<preference name="FadeSplashScreenDuration" value="500"/>
-		<preference name="ShowSplashScreenSpinner" value="false"/>
-	</platform>
-	<!-- Android only -->
-	<platform name="android">
-		<splash src="www/Splash-Android.png" />
-		<preference name="SplashMaintainAspectRatio" value="true" />
-		<preference name="SplashShowOnlyFirstTime" value="false" />
-	</platform>
-	<!-- Common -->
-	<preference name="AutoHideSplashScreen" value="true" />
-	<preference name="SplashScreenDelay" value="3000" />	
-	
-	<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need camera access to take pictures</string>
-	</edit-config>
-	
-	<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need to photo library access to get pictures from there</string>
-	</edit-config>
-	
-	<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need location access to find things nearby</string>
-	</edit-config>
-	
-	<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need to photo library access to save pictures there</string>
-	</edit-config>
-	
+	<icon src="www/icon-256.png" width="256" height="256" density="xxxhdpi" />
+	<icon src="www/icon-128.png" width="128" height="128" density="xhdpi" />
+
 	<preference name="android-targetSdkVersion" value="26" />
+
 	<preference name="orientation" value="portrait" />
-	<preference name="fullscreen" value="true" />
+	<preference name="fullscreen" value="false" />
 	<preference name="DisallowOverscroll" value="true" />
 	<preference name="AllowInlineMediaPlayback" value="true" />
 
-	<config-file parent="UIStatusBarHidden" platform="ios" target="*-Info.plist"><true/></config-file>
-	<config-file parent="UIViewControllerBasedStatusBarAppearance" platform="ios" target="*-Info.plist"><false/></config-file>
-
-
 	<preference name="deployment-target" value="8.0" />
 	<preference name="android-minSdkVersion" value="21" />
-	<preference name="phonegap-version" value="cli-7.1.0" />
 	<access origin="*" />
 
-	<plugin name="cordova-custom-config" />
 	<plugin name="cordova-plugin-camera" />
 	<plugin name="cordova-plugin-inappbrowser" />
 	<plugin name="cordova-plugin-media" />
-	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-whitelist" />
-	<plugin name="cordova-plugin-splashscreen" />
-	<plugin name="cordova-plugin-device" />
-	<plugin name="cordova-plugin-dialogs" source="npm" />
-	<plugin name="cordova-plugin-password-dialog" source="npm" />
-	<plugin name="cordova-plugin-pin-dialog" source="npm" />
-	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
-	<plugin name="cordova-plugin-market-ibby" source="npm" />
-	<plugin name="cordova-plugin-badge" source="npm" />
-	<plugin name="cordova-plugin-keyboard" source="npm" />
-	<plugin name="cordova-plugin-lcs" source="npm"/>
+
 
 	<engine name="ios" />
 	<engine name="android" />
