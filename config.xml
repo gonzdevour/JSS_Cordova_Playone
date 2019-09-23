@@ -85,26 +85,6 @@
 	<preference name="phonegap-version" value="cli-7.1.0" />
 	<access origin="*" />
 
-	<plugin name="cordova-custom-config" />
-	<plugin name="cordova-plugin-camera" />
-	<plugin name="cordova-plugin-inappbrowser" />
-	<plugin name="cordova-plugin-media" />
-	<plugin name="cordova-plugin-statusbar" />
-	<plugin name="cordova-plugin-vibration" />
-	<plugin name="cordova-plugin-whitelist" />
-	<plugin name="cordova-plugin-splashscreen" />
-	<plugin name="cordova-plugin-device" />
-	<plugin name="cordova-plugin-dialogs" source="npm" />
-	<plugin name="cordova-plugin-password-dialog" source="npm" />
-	<plugin name="cordova-plugin-pin-dialog" source="npm" />
-	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
-	<plugin name="cordova-plugin-market-ibby" source="npm" />
-	<plugin name="cordova-plugin-badge" source="npm" />
-	<plugin name="cordova-plugin-keyboard" source="npm" />
-	<plugin name="cordova-plugin-facebook4" spec="1.7.4">
-        <variable name="APP_ID" value="1678767109016625" />
-        <variable name="APP_NAME" value="Connect" />
-	</plugin>
 	<plugin name="cordova-plugin-play-games-services" spec="1.1.2">
 		<variable name="APP_ID" value="1055728607458" />
 	</plugin>
