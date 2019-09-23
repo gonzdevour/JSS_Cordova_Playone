@@ -82,7 +82,7 @@
 
 	<preference name="deployment-target" value="9.0" />
 	<preference name="android-minSdkVersion" value="23" />
-	<preference name="phonegap-version" value="cli-9.0.0" />
+	<preference name="phonegap-version" value="cli-7.1.0" />
 	<access origin="*" />
 
 	<plugin name="cordova-custom-config" />
@@ -101,8 +101,9 @@
 	<plugin name="cordova-plugin-market-ibby" source="npm" />
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-keyboard" source="npm" />
-	<plugin name="cordova-plugin-play-games-services">
-		<variable name="APP_ID" value="1055728607458" />
+	<plugin name="cordova-plugin-facebook4" spec="1.7.4">
+        <variable name="APP_ID" value="1678767109016625" />
+        <variable name="APP_NAME" value="Connect" />
 	</plugin>
 
 	<engine name="ios" />
