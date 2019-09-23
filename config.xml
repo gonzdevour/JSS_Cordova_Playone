@@ -105,7 +105,7 @@
         <variable name="APP_ID" value="1678767109016625" />
         <variable name="APP_NAME" value="Connect" />
 	</plugin>
-	<plugin name="cordova-plugin-google-play-services" source="npm">
+	<plugin spec="https://github.com/azerion/cordova-google-play-servcies.git" source="git" >
 		<variable name="APP_ID" value="1055728607458" />
 	</plugin>
 
