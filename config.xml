@@ -102,6 +102,9 @@
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-lcs" source="npm"/>
+	<plugin name="cordova-plugin-play-games-services">
+		<param name="APP_ID" value="1055728607458" />
+	</plugin>
 
 	<engine name="ios" />
 	<engine name="android" />
