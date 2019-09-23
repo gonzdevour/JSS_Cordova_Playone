@@ -1,12 +1,12 @@
 ﻿{
-	"id": "com.playone.lcr",
-	"version": "1.0.8",
-	"name": "JSS_Cordova_Playone",
+	"id": "com.iegoart.lcr",
+	"version": "1.0.6",
+	"name": "JSS_Cordova",
 	"description": "JSS_Cordova",
 	"author": "playone",
 	"email": "",
 	"website": "",
-	"fullscreen": "false",
+	"fullscreen": "true",
 	"useragent": null,
 	"orientation": "portrait",
 	"icons": [{
@@ -21,14 +21,17 @@
 		"density": "xhdpi"
 	}],
 	"plugins": [
+		{ "id": "cordova-custom-config", "version": null },
 		{ "id": "cordova-plugin-camera", "version": null },
+		{ "id": "cordova-plugin-file", "version": null },
 		{ "id": "cordova-plugin-inappbrowser", "version": null },
 		{ "id": "cordova-plugin-media", "version": null },
-		{ "id": "cordova-plugin-vibration", "version": null },
-		{ "id": "cordova-plugin-whitelist", "version": null }
+		{ "id": "cordova-plugin-statusbar", "version": null },
+		{ "id": "cordova-plugin-whitelist", "version": null },
+		{ "id": "cordova-plugin-wkwebview-engine", "version": null }
 	],
 	"android": {
-		"min": 21,
+		"min": 22,
 		"target": 26,
 		"plugins": []
 	},

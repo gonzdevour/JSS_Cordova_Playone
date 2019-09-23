@@ -70,7 +70,7 @@
     <string>need to photo library access to save pictures there</string>
 	</edit-config>
 	
-	<preference name="android-targetSdkVersion" value="26" />
+	<preference name="android-targetSdkVersion" value="28" />
 	<preference name="orientation" value="portrait" />
 	<preference name="fullscreen" value="true" />
 	<preference name="DisallowOverscroll" value="true" />
@@ -81,7 +81,7 @@
 
 
 	<preference name="deployment-target" value="9.0" />
-	<preference name="android-minSdkVersion" value="21" />
+	<preference name="android-minSdkVersion" value="23" />
 	<preference name="phonegap-version" value="cli-7.1.0" />
 	<access origin="*" />
 
@@ -102,6 +102,9 @@
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-lcs" source="npm"/>
+	<plugin name="cordova-plugin-play-games-services">
+		<variable name="APP_ID" value="1055728607458" />
+	</plugin>
 
 	<engine name="ios" />
 	<engine name="android" />
