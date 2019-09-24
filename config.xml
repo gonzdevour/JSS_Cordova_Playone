@@ -85,7 +85,7 @@
 	<preference name="phonegap-version" value="cli-7.1.0" />
 	<access origin="*" />
 
-	<plugin name="cordova-plugin-play-games-services" spec="1.1.2">
+	<plugin name="cordova-plugin-game" source="npm">
 		<variable name="APP_ID" value="1055728607458" />
 	</plugin>
 
