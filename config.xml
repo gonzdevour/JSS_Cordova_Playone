@@ -106,7 +106,7 @@
 	<plugin name="cordova-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-lcs" source="npm"/>
 	<!-- testing -->
-	<plugin name="cordova-plugin-purchase" source="npm"/>
+	<plugin name="cordova-plugin-purchase" source="npm" version="9.0.0"/>
 	<plugin name="cordova-plugin-admobpro" source="npm">
 		<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
 		<variable name="ADMOB_APP_ID" value="ca-app-pub-9463460868384198~8273098860" />
