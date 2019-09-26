@@ -109,6 +109,7 @@
 	<plugin name="cordova-plugin-purchase" source="npm"/>
 	<plugin name="cordova-plugin-admobpro" source="npm">
 		<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
+		<variable name="ADMOB_APP_ID" value="ca-app-pub-9463460868384198~8273098860" />
 	</plugin>
 	<plugin name="cordova-plugin-play-games-services">
 		<variable name="APP_ID" value="1055728607458" />
