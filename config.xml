@@ -49,6 +49,7 @@
 		<splash src="www/Splash-Android.png" />
 		<preference name="SplashMaintainAspectRatio" value="true" />
 		<preference name="SplashShowOnlyFirstTime" value="false" />
+		<preference name="ShowSplashScreenSpinner" value="false"/>
 	</platform>
 	<!-- Common -->
 	<preference name="AutoHideSplashScreen" value="true" />
@@ -82,10 +83,34 @@
 
 	<preference name="deployment-target" value="9.0" />
 	<preference name="android-minSdkVersion" value="23" />
+	<!-- for admobpro -->
+	<preference name="android-build-tool" value="gradle" />
 	<preference name="phonegap-version" value="cli-7.1.0" />
 	<access origin="*" />
 
-	<plugin name="cordova-plugin-play-games-services" spec="1.1.2">
+	<plugin name="cordova-custom-config" />
+	<plugin name="cordova-plugin-camera" />
+	<plugin name="cordova-plugin-inappbrowser" />
+	<plugin name="cordova-plugin-media" />
+	<plugin name="cordova-plugin-statusbar" />
+	<plugin name="cordova-plugin-vibration" />
+	<plugin name="cordova-plugin-whitelist" />
+	<plugin name="cordova-plugin-splashscreen" />
+	<plugin name="cordova-plugin-device" />
+	<plugin name="cordova-plugin-dialogs" source="npm" />
+	<plugin name="cordova-plugin-password-dialog" source="npm" />
+	<plugin name="cordova-plugin-pin-dialog" source="npm" />
+	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
+	<plugin name="cordova-plugin-market-ibby" source="npm" />
+	<plugin name="cordova-plugin-badge" source="npm" />
+	<plugin name="cordova-plugin-keyboard" source="npm" />
+	<plugin name="cordova-plugin-lcs" source="npm"/>
+	<!-- testing -->
+	<plugin name="cordova-plugin-purchase" source="npm"/>
+	<plugin name="cordova-plugin-admobpro" source="npm">
+		<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
+	</plugin>
+	<plugin name="cordova-plugin-play-games-services">
 		<variable name="APP_ID" value="1055728607458" />
 	</plugin>
 
