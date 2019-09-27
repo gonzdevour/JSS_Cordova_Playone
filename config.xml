@@ -103,6 +103,7 @@
 	<plugin name="cordova-plugin-market-ibby" source="npm" />
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-keyboard" source="npm" />
+	<plugin name="cordova-plugin-camera" />
 	<plugin name="cordova-play-services-version-adapter" source="npm" />
 	
 	<!-- testing -->
