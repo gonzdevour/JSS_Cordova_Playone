@@ -89,7 +89,6 @@
 	<access origin="*" />
 
 	<plugin name="cordova-custom-config" />
-	<plugin name="cordova-plugin-camera" />
 	<plugin name="cordova-plugin-inappbrowser" />
 	<plugin name="cordova-plugin-media" />
 	<plugin name="cordova-plugin-statusbar" />
