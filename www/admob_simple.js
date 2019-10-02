@@ -3,15 +3,15 @@ var admobid = {};
 // TODO: replace the following ad units with your own
 if( /(android)/i.test(navigator.userAgent) ) {
   admobid = { // for Android
-    banner: 'ca-app-pub-3940256099942544/6300978111',
-    interstitial: 'ca-app-pub-3940256099942544/1033173712',
-    rewardvideo: 'ca-app-pub-3940256099942544/5224354917',
+    banner: 'ca-app-pub-9463460868384198/9749832066',
+    interstitial: 'ca-app-pub-9463460868384198/2226565269',
+    rewardvideo: 'ca-app-pub-9463460868384198/1793550943',
   };
 } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
   admobid = { // for iOS
-    banner: 'ca-app-pub-3940256099942544/2934735716',
-    interstitial: 'ca-app-pub-3940256099942544/4411468910',
-    rewardvideo: 'ca-app-pub-3940256099942544/1712485313',
+    banner: 'ca-app-pub-9463460868384198/1587436860',
+    interstitial: 'ca-app-pub-9463460868384198/3064170064',
+    rewardvideo: 'ca-app-pub-9463460868384198/8662211627',
   };
 } else {
   admobid = { // for Windows Phone, deprecated
