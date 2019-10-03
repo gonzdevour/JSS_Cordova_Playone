@@ -20076,7 +20076,7 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.rex_TouchWrap,
 	cr.plugins_.TextBox,
 	cr.system_object.prototype.cnds.IsGroupActive,
-	cr.system_object.prototype.cnds.Every,
+	cr.system_object.prototype.cnds.OnLayoutStart,
 	cr.system_object.prototype.acts.SetVar,
 	cr.plugins_.Rex_jsshell.prototype.exps.Prop,
 	cr.plugins_.Function.prototype.acts.CallFunction,
