@@ -21,7 +21,7 @@ if( /(android)/i.test(navigator.userAgent) ) {
   };
 }
 
-function initApp() {
+function initAdmob() {
   if (! AdMob ) { alert( 'admob plugin not ready' ); return; }
 
   // this will create a banner on startup
@@ -29,6 +29,7 @@ function initApp() {
     adId: admobid.banner,
     position: AdMob.AD_POSITION.BOTTOM_CENTER,
     isTesting: true, // TODO: remove this line when release
+    autoShow: false
     overlap: false,
     offsetTopBar: false,
     bgColor: 'black'
@@ -38,12 +39,12 @@ function initApp() {
   AdMob.prepareInterstitial({
     adId: admobid.interstitial,
     isTesting: true, // TODO: remove this line when release
-    autoShow: true
+    autoShow: false
   });
 }
 
 if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
-    document.addEventListener('deviceready', initApp, false);
+    document.addEventListener('deviceready', initAdmob, false);
 } else {
-    initApp();
+    initAdmob();
 }
