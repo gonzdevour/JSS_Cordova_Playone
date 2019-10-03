@@ -29,7 +29,7 @@ function initAdmob() {
     adId: admobid.banner,
     position: AdMob.AD_POSITION.BOTTOM_CENTER,
     isTesting: true, // TODO: remove this line when release
-    autoShow: false
+    autoShow: true
     overlap: false,
     offsetTopBar: false,
     bgColor: 'black'
