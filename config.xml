@@ -102,7 +102,6 @@
 	<plugin name="cordova-plugin-dialogs" source="npm" />
 	<plugin name="cordova-plugin-password-dialog" source="npm" />
 	<plugin name="cordova-plugin-pin-dialog" source="npm" />
-
 	<plugin name="cordova-plugin-save-image" source="npm" />
 	<plugin name="cordova-plugin-network-information" source="npm" />
 	<plugin name="cordova-plugin-local-notification" source="npm" />
@@ -111,10 +110,13 @@
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-keyboard" source="npm" />
 	<plugin name="cordova-play-services-version-adapter" source="npm" />
-	<plugin name="cordova-plugin-facebook4" source="npm">
+	<!-- testing -->	
+	<plugin name="phonegap-plugin-barcodescanner" spec="^7.0.0" />
+	<plugin name="cordova-plugin-facebook4" spec="^4.0.0">
         <variable name="APP_ID" value="1678767109016625" />
         <variable name="APP_NAME" value="Connect" />
-	</plugin>	
+		<variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.25.0" />
+	</plugin>
 	<!-- testing -->
 	<plugin name="cordova-plugin-play-games-services">
 		<variable name="ANDROID_PLAY_SERVICES_GAMES_VERSION" value="16.0.0" />
