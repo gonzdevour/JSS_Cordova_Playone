@@ -20068,8 +20068,8 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Browser,
 	cr.plugins_.Function,
 	cr.plugins_.filechooser,
-	cr.plugins_.Rex_canvas,
 	cr.plugins_.Rex_Comment,
+	cr.plugins_.Rex_canvas,
 	cr.plugins_.Rex_JSONBuider,
 	cr.plugins_.Rex_Hash,
 	cr.plugins_.Rex_jsshell,
@@ -20107,10 +20107,11 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Rex_canvas.prototype.acts.LoadURL,
 	cr.plugins_.filechooser.prototype.cnds.OnChanged,
 	cr.plugins_.filechooser.prototype.exps.FileURLAt,
+	cr.system_object.prototype.exps.replace,
 	cr.plugins_.Rex_Hash.prototype.exps.AsJSON,
 	cr.plugins_.Rex_JSONBuider.prototype.acts.Clean,
 	cr.plugins_.Rex_JSONBuider.prototype.cnds.SetRoot,
 	cr.plugins_.Rex_JSONBuider.prototype.acts.AddValue,
-	cr.plugins_.Rex_JSONBuider.prototype.acts.AddBooleanValue,
-	cr.plugins_.Rex_JSONBuider.prototype.exps.AsJSON
+	cr.plugins_.Rex_JSONBuider.prototype.exps.AsJSON,
+	cr.plugins_.Rex_JSONBuider.prototype.acts.AddBooleanValue
 ];};
