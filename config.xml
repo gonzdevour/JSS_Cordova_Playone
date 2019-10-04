@@ -102,7 +102,7 @@
 	<plugin name="cordova-plugin-dialogs" source="npm" />
 	<plugin name="cordova-plugin-password-dialog" source="npm" />
 	<plugin name="cordova-plugin-pin-dialog" source="npm" />
-	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
+
 	<plugin name="cordova-plugin-save-image" source="npm" />
 	<plugin name="cordova-plugin-network-information" source="npm" />
 	<plugin name="cordova-plugin-local-notification" source="npm" />
