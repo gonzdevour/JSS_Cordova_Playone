@@ -104,7 +104,7 @@
 	<plugin name="cordova-plugin-pin-dialog" source="npm" />
 	<plugin name="cordova-plugin-save-image" source="npm" />
 	<plugin name="cordova-plugin-network-information" source="npm" />
-	<plugin name="cordova-plugin-local-notification" source="npm" />
+
 	<plugin name="cordova-plugin-native-spinner" source="npm" />
 	<plugin name="cordova-plugin-market-ibby" source="npm" />
 	<plugin name="cordova-plugin-badge" source="npm" />
