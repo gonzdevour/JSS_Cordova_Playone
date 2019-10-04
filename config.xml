@@ -110,7 +110,11 @@
 	<plugin name="cordova-plugin-market-ibby" source="npm" />
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-keyboard" source="npm" />
-	<plugin name="cordova-play-services-version-adapter" source="npm" />	
+	<plugin name="cordova-play-services-version-adapter" source="npm" />
+	<plugin name="cordova-plugin-facebook4" source="npm">
+        <variable name="APP_ID" value="1678767109016625" />
+        <variable name="APP_NAME" value="Connect" />
+	</plugin>	
 	<!-- testing -->
 	<plugin name="cordova-plugin-play-games-services">
 		<variable name="ANDROID_PLAY_SERVICES_GAMES_VERSION" value="16.0.0" />
