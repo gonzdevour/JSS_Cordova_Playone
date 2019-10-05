@@ -107,7 +107,7 @@
 	<plugin name="cordova-plugin-native-spinner" source="npm" />
 	<plugin name="cordova-plugin-market-ibby" source="npm" />
 	<plugin name="cordova-plugin-keyboard" source="npm" />
-	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
+
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-local-notification" source="npm" />
 	<plugin name="cordova-plugin-facebook4" spec="^4.0.0">
