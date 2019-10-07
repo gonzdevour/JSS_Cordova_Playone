@@ -11,11 +11,25 @@ function initializeStore() {
     // We register a dummy product. It's ok, it shouldn't
     // prevent the store "ready" event from firing.
     store.register({
-        id:    "com.example.app.inappid1",
-        alias: "100 coins",
+        id:    "gems.lv1.cp",
+        alias: "gems.lv1.cp",
         type:  store.CONSUMABLE
     });
-
+    store.register({
+        id:    "gems.lv2.cp",
+        alias: "gems.lv2.cp",
+        type:  store.CONSUMABLE
+    });	
+    store.register({
+        id:    "gems.lv3.cp",
+        alias: "gems.lv3.cp",
+        type:  store.CONSUMABLE
+    });
+    store.register({
+        id:    "removeads.cp",
+        alias: "removeads.cp",
+        type:  store.NON_CONSUMABLE
+    });
     // When every goes as expected, it's time to celebrate!
     // The "ready" event should be welcomed with music and fireworks,
     // go ask your boss about it! (just in case)
