@@ -32,9 +32,29 @@ function initiap() {
     // The "ready" event should be welcomed with music and fireworks,
     // go ask your boss about it! (just in case)
     store.ready(function() {
-        c2_callFunction("log", ["\\o/ STORE READY \\o/"]);
+        c2_callFunction("log", ["store ready"]);
     });
 
+	// When events
+    store.when("product").registered(function(p) {
+        c2_callFunction("log", ["product registered"]);
+        c2_callFunction("log", [p.id]);
+		c2_callFunction("log", [p.title]);
+		c2_callFunction("log", [p.introPrice]);
+    });
+    store.when("product").approved(function(p) {
+        c2_callFunction("log", ["product approved"]);
+        c2_callFunction("log", [p.id]);
+		c2_callFunction("log", [p.title]);
+		c2_callFunction("log", [p.introPrice]);
+        p.finish();
+    });
+    store.when("product").finished(function(p) {
+        c2_callFunction("log", ["product finished"]);
+        c2_callFunction("log", [p.id]);
+		c2_callFunction("log", [p.title]);
+		c2_callFunction("log", [p.introPrice]);
+    });
     // After we've done our setup, we tell the store to do
     // it's first refresh. Nothing will happen if we do not call store.refresh()
     store.refresh();
