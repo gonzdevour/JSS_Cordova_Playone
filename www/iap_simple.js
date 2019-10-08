@@ -11,21 +11,17 @@ function initiap() {
         c2_callFunction("log", ["product loaded " + p.id]);
     });
     store.when("product").updated(function(p) {
-        c2_callFunction("iap_updated", [p.id, p.title, p.introPrice]);
-	    c2_callFunction("log", ["product updated"]);
+        c2_callFunction("iap_updated", [p.id, p.title, p.Price]);
     });
     store.when("product").approved(function(p) {
         c2_callFunction("log", ["product approved"]);
         c2_callFunction("log", [p.id]);
 		c2_callFunction("log", [p.title]);
-		c2_callFunction("log", [p.introPrice]);
+		c2_callFunction("log", [p.Price]);
         p.finish();
     });
     store.when("product").finished(function(p) {
-        c2_callFunction("log", ["product finished"]);
-        c2_callFunction("log", [p.id]);
-		c2_callFunction("log", [p.title]);
-		c2_callFunction("log", [p.introPrice]);
+        c2_callFunction("log", ["product finished" + p.id]);
     });
     store.error(function(e) {
         c2_callFunction("log", ["product error"]);
