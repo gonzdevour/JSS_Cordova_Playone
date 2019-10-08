@@ -1,8 +1,6 @@
 // We must wait for the "deviceready" event to fire
 // before we can use the store object.
-document.addEventListener('deviceready', initializeStore, false);
-
-function initializeStore() {
+function initiap() {
 
     // Let's set a pretty high verbosity level, so that we see a lot of stuff
     // in the console (reassuring us that something is happening).
@@ -34,7 +32,7 @@ function initializeStore() {
     // The "ready" event should be welcomed with music and fireworks,
     // go ask your boss about it! (just in case)
     store.ready(function() {
-        window.alert("\\o/ STORE READY \\o/");
+        c2_callFunction("log", ["\\o/ STORE READY \\o/"]);
     });
 
     // After we've done our setup, we tell the store to do
