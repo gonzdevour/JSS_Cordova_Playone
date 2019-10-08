@@ -3,17 +3,16 @@
 function initiap() {
 
 // Add When events
+	//register只回傳id，沒有其它資料
     store.when("product").registered(function(p) {
-        c2_callFunction("log", ["product registered"]);
-        c2_callFunction("log", [p.id]);
-		c2_callFunction("log", [p.title]);
-		c2_callFunction("log", [p.introPrice]);
+        c2_callFunction("log", ["product registered" + p.id]);
     });
     store.when("product").loaded(function(p) {
         c2_callFunction("log", ["product loaded " + p.id]);
     });
     store.when("product").updated(function(p) {
         c2_callFunction("iap_updated", [p.id, p.title, p.introPrice]);
+	    c2_callFunction("log", ["product updated"]);
     });
     store.when("product").approved(function(p) {
         c2_callFunction("log", ["product approved"]);
