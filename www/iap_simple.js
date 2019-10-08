@@ -2,12 +2,38 @@
 // before we can use the store object.
 function initiap() {
 
-    // Let's set a pretty high verbosity level, so that we see a lot of stuff
-    // in the console (reassuring us that something is happening).
-    store.verbosity = store.INFO;
-
-    // We register a dummy product. It's ok, it shouldn't
-    // prevent the store "ready" event from firing.
+// Add When events
+    store.when("product").registered(function(p) {
+        c2_callFunction("log", ["product registered"]);
+        c2_callFunction("log", [p.id]);
+		c2_callFunction("log", [p.title]);
+		c2_callFunction("log", [p.introPrice]);
+    });
+    store.when("product").loaded(function(p) {
+        c2_callFunction("log", ["product loaded " + p.id]);
+    });
+    store.when("product").updated(function(p) {
+        c2_callFunction("iap_updated", [p.id, p.title, p.introPrice]);
+    });
+    store.when("product").approved(function(p) {
+        c2_callFunction("log", ["product approved"]);
+        c2_callFunction("log", [p.id]);
+		c2_callFunction("log", [p.title]);
+		c2_callFunction("log", [p.introPrice]);
+        p.finish();
+    });
+    store.when("product").finished(function(p) {
+        c2_callFunction("log", ["product finished"]);
+        c2_callFunction("log", [p.id]);
+		c2_callFunction("log", [p.title]);
+		c2_callFunction("log", [p.introPrice]);
+    });
+    store.error(function(e) {
+        c2_callFunction("log", ["product error"]);
+        c2_callFunction("log", [e.code]);
+		c2_callFunction("log", [e.message]);
+    });
+// product register
     store.register({
         id:    "gems.lv1.cp",
         alias: "gems.lv1.cp",
@@ -35,26 +61,6 @@ function initiap() {
         c2_callFunction("log", ["store ready"]);
     });
 
-	// When events
-    store.when("product").registered(function(p) {
-        c2_callFunction("log", ["product registered"]);
-        c2_callFunction("log", [p.id]);
-		c2_callFunction("log", [p.title]);
-		c2_callFunction("log", [p.introPrice]);
-    });
-    store.when("product").approved(function(p) {
-        c2_callFunction("log", ["product approved"]);
-        c2_callFunction("log", [p.id]);
-		c2_callFunction("log", [p.title]);
-		c2_callFunction("log", [p.introPrice]);
-        p.finish();
-    });
-    store.when("product").finished(function(p) {
-        c2_callFunction("log", ["product finished"]);
-        c2_callFunction("log", [p.id]);
-		c2_callFunction("log", [p.title]);
-		c2_callFunction("log", [p.introPrice]);
-    });
     // After we've done our setup, we tell the store to do
     // it's first refresh. Nothing will happen if we do not call store.refresh()
     store.refresh();
