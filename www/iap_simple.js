@@ -11,13 +11,10 @@ function initiap() {
         c2_callFunction("log", ["product loaded " + p.id]);
     });
     store.when("product").updated(function(p) {
-        c2_callFunction("iap_updated", [p.id, p.title, p.price]);
+        c2_callFunction("iap_updated", [p.id, p.title, p.priceMicros, p.currency]);
     });
     store.when("product").approved(function(p) {
-        c2_callFunction("log", ["product approved"]);
-        c2_callFunction("log", [p.id]);
-		c2_callFunction("log", [p.title]);
-		c2_callFunction("log", [p.price]);
+        c2_callFunction("log", ["product approved" + p.id]);
         p.finish();
     });
     store.when("product").finished(function(p) {
