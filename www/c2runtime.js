@@ -20822,8 +20822,5 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Rex_JSONBuider.prototype.cnds.SetRoot,
 	cr.plugins_.Rex_JSONBuider.prototype.acts.AddValue,
 	cr.plugins_.Rex_JSONBuider.prototype.exps.AsJSON,
-	cr.plugins_.Rex_JSONBuider.prototype.acts.AddBooleanValue,
-	cr.plugins_.Arr.prototype.acts.JSONLoad,
-	cr.plugins_.Arr.prototype.exps.AsJSON,
-	cr.plugins_.Arr.prototype.exps.At
+	cr.plugins_.Rex_JSONBuider.prototype.acts.AddBooleanValue
 ];};
