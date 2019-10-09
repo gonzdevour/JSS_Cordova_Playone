@@ -2,6 +2,8 @@
 // before we can use the store object.
 function initiap() {
 
+// fovea receipt validator
+	store.validator = "https://validator.fovea.cc/v1/validate?appName=com.playone.cp&apiKey=6b024545-4f20-4c11-9848-a30a9682823c";
 // Add When events
 	//register只回傳id，沒有其它資料
     store.when("product").registered(function(p) {
@@ -15,7 +17,14 @@ function initiap() {
     });
     store.when("product").approved(function(p) {
         c2_callFunction("log", ["product approved" + p.id]);
+		p.verify();
+    });
+    store.when("product").verified(function(p) {
+        c2_callFunction("log", ["product verified" + p.id]);
         p.finish();
+    });
+    store.when("product").unverified(function(p) {
+        c2_callFunction("log", ["product unverified" + p.id]);
     });
     store.when("product").finished(function(p) {
         c2_callFunction("log", ["product finished" + p.id]);
