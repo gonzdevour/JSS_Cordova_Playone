@@ -123,8 +123,8 @@
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-local-notification" source="npm" />
 	<plugin name="cordova-plugin-native-spinner" source="npm" />
-	<plugin name="cordova-plugin-media-capture" />
 	<plugin name="cordova-plugin-game-center" source="npm" />
+	<plugin name="cordova-plugin-media-capture" />
 	<plugin name="cordova-plugin-native-keyboard" source="npm" />
 	<!-- testing -->
 	<plugin name="cordova-plugin-play-games-services">
