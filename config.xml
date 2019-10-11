@@ -55,20 +55,33 @@
 	<preference name="AutoHideSplashScreen" value="true" />
 	<preference name="SplashScreenDelay" value="3000" />	
 	
+	<!-- Localization -->	
+	<config-file platform="ios" target="*-Info.plist" parent="CFBundleDevelopmentRegion">
+		<array>
+			<string>zh-Hant</string>
+		</array>
+	</config-file>
+	<config-file platform="ios" target="*-Info.plist" parent="CFBundleLocalizations">
+		<array>
+			<string>zh-Hant</string>
+		</array>
+	</config-file>
+	
+	<!-- Permission Description -->	
 	<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need camera access to take pictures</string>
+    <string>需要啟用您的相機掃描展場中的光碼，以取得導覽或活動資訊。</string>
 	</edit-config>
 	
 	<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need to photo library access to get pictures from there</string>
+    <string>需要使用您的相簿以儲存照片。</string>
 	</edit-config>
 	
 	<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need location access to find things nearby</string>
+    <string>需要取得您的位置資訊以偵測在您附近舉辦的展覽或活動</string>
 	</edit-config>
 	
 	<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need to photo library access to save pictures there</string>
+    <string>需要使用您的相簿以儲存照片。</string>
 	</edit-config>
 	
 	<preference name="android-targetSdkVersion" value="28" />
@@ -92,6 +105,7 @@
 
 	<plugin name="cordova-custom-config" />
 	<plugin name="cordova-plugin-media" />
+	<plugin name="cordova-plugin-media-capture" />
 	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-camera" />
 	<plugin name="cordova-plugin-device" />
@@ -106,10 +120,13 @@
 	<plugin name="cordova-plugin-network-information" source="npm" />
 	<plugin name="cordova-plugin-native-spinner" source="npm" />
 	<plugin name="cordova-plugin-market-ibby" source="npm" />
-	<plugin name="cordova-plugin-keyboard" source="npm" />
+	<plugin name="cordova-plugin-native-keyboard" source="npm" />
 	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-local-notification" source="npm" />
+	<plugin name="cordova-plugin-game-center" source="npm" />
+	<plugin name="cordova-plugin-listpicker" source="npm" />
+	<plugin name="cordova-plugin-native-spinner" source="npm" />
 	<!-- testing -->
 	<plugin name="cordova-plugin-play-games-services">
 		<variable name="ANDROID_PLAY_SERVICES_GAMES_VERSION" value="16.0.0" />

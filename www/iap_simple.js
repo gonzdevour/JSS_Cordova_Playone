@@ -7,7 +7,7 @@ function initiap() {
 // Add When events
 	//register只回傳id，沒有其它資料
     store.when("product").registered(function(p) {
-        c2_callFunction("log", ["product registered" + p.id]);
+        c2_callFunction("log", ["product registered " + p.id]);
     });
     store.when("product").loaded(function(p) {
         c2_callFunction("log", ["product loaded " + p.id]);
@@ -16,18 +16,18 @@ function initiap() {
         c2_callFunction("iap_updated", [p.id, p.title, p.priceMicros, p.currency]);
     });
     store.when("product").approved(function(p) {
-        c2_callFunction("log", ["product approved" + p.id]);
+        c2_callFunction("log", ["product approved " + p.id]);
 		p.verify();
     });
     store.when("product").verified(function(p) {
-        c2_callFunction("log", ["product verified" + p.id]);
+        c2_callFunction("log", ["product verified " + p.id]);
         p.finish();
     });
     store.when("product").unverified(function(p) {
-        c2_callFunction("log", ["product unverified" + p.id]);
+        c2_callFunction("log", ["product unverified " + p.id]);
     });
     store.when("product").finished(function(p) {
-        c2_callFunction("log", ["product finished" + p.id]);
+        c2_callFunction("iap_finished ", [p.id]);
     });
     store.error(function(e) {
         c2_callFunction("log", ["product error"]);
