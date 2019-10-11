@@ -55,7 +55,35 @@
 	<preference name="AutoHideSplashScreen" value="true" />
 	<preference name="SplashScreenDelay" value="3000" />	
 	
-	<!-- Localization -->		
+	<!-- Localization -->	
+	<config-file platform="ios" target="*-Info.plist" parent="CFBundleDevelopmentRegion">
+		<array>
+			<string>zh-Hant</string>
+		</array>
+	</config-file>
+	<config-file platform="ios" target="*-Info.plist" parent="CFBundleLocalizations">
+		<array>
+			<string>zh-Hant</string>
+		</array>
+	</config-file>
+	
+	<!-- Permission Description -->	
+	<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+    <string>需要啟用您的相機掃描展場中的光碼，以取得導覽或活動資訊。</string>
+	</edit-config>
+	
+	<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+    <string>需要使用您的相簿以儲存照片。</string>
+	</edit-config>
+	
+	<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+    <string>需要取得您的位置資訊以偵測在您附近舉辦的展覽或活動</string>
+	</edit-config>
+	
+	<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+    <string>需要使用您的相簿以儲存照片。</string>
+	</edit-config>
+	
 	<preference name="android-targetSdkVersion" value="28" />
 	<preference name="orientation" value="portrait" />
 	<preference name="fullscreen" value="true" />
@@ -94,7 +122,9 @@
 	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-local-notification" source="npm" />
-
+	<plugin name="cordova-plugin-native-spinner" source="npm" />
+	<plugin name="cordova-plugin-game-center" source="npm" />
+	<plugin name="cordova-plugin-media-capture" />
 	<!-- testing -->
 	<plugin name="cordova-plugin-play-games-services">
 		<variable name="ANDROID_PLAY_SERVICES_GAMES_VERSION" value="16.0.0" />
