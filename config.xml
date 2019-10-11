@@ -125,7 +125,7 @@
 	<plugin name="cordova-plugin-native-spinner" source="npm" />
 	<plugin name="cordova-plugin-media-capture" />
 	<plugin name="cordova-plugin-game-center" source="npm" />
-
+	<plugin name="cordova-plugin-native-keyboard" source="npm" />
 	<!-- testing -->
 	<plugin name="cordova-plugin-play-games-services">
 		<variable name="ANDROID_PLAY_SERVICES_GAMES_VERSION" value="16.0.0" />
