@@ -43,6 +43,10 @@
 		<preference name="FadeSplashScreen" value="true"/>
 		<preference name="FadeSplashScreenDuration" value="500"/>
 		<preference name="ShowSplashScreenSpinner" value="false"/>
+		<plugin name="cordova-plugin-admobpro-firebase" source="npm">
+			<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
+			<variable name="ADMOB_APP_ID" value="ca-app-pub-9463460868384198~9110703668" />
+		</plugin>
 	</platform>
 	<!-- Android only -->
 	<platform name="android">
@@ -50,6 +54,10 @@
 		<preference name="SplashMaintainAspectRatio" value="true" />
 		<preference name="SplashShowOnlyFirstTime" value="false" />
 		<preference name="ShowSplashScreenSpinner" value="false"/>
+		<plugin name="cordova-plugin-admobpro-firebase" source="npm">
+			<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
+			<variable name="ADMOB_APP_ID" value="ca-app-pub-9463460868384198~8273098860" />
+		</plugin>
 	</platform>
 	<!-- Common -->
 	<preference name="AutoHideSplashScreen" value="true" />
@@ -69,19 +77,23 @@
 	
 	<!-- Permission Description -->	
 	<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-    <string>需要啟用您的相機掃描展場中的光碼，以取得導覽或活動資訊。</string>
+		<string>需要啟用您的相機掃描展場中的光碼，以取得導覽或活動資訊。</string>
 	</edit-config>
 	
 	<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-    <string>需要使用您的相簿以儲存照片。</string>
+		<string>需要使用您的相簿以儲存照片。</string>
 	</edit-config>
 	
 	<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-    <string>需要取得您的位置資訊以偵測在您附近舉辦的展覽或活動</string>
+		<string>需要取得您的位置資訊以偵測在您附近舉辦的展覽或活動</string>
 	</edit-config>
 	
 	<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-    <string>需要使用您的相簿以儲存照片。</string>
+		<string>需要使用您的相簿以儲存照片。</string>
+	</edit-config>
+	
+	<edit-config target="NSMicrophoneUsageDescription" file="*-Info.plist" mode="merge">
+		<string>需要使用您的麥克風以儲存音訊</string>
 	</edit-config>
 	
 	<preference name="android-targetSdkVersion" value="28" />
@@ -133,10 +145,6 @@
 	</plugin>	
 	<plugin name="cordova-plugin-purchase" source="npm" version="9.0.0">
 		<variable name="BILLING_KEY" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnleRaUGvAAZ8OeGfMSRzBh4/SSkz0LQLeshZGa/O3zAX84EmZUtzLkkxwkLbYFtv/MEu5qgq5TH1WDlT7u+QF0Wt2JtIWU5PtyfeiuJAU1TnUo4ImOw+UBE1rqWckovS98YyyGf3q+2SBym5i3pRFNb5tpJojf51/h9HiwF/+uU+Yy48epRoddUO7zx8VJX7irXSj879x3xjc2MmkgX2YQ5HynGSDNemYgiNKCULc5cfzQeF7DQHIZYNL4xT35mpc/jI16oK2uFEfTHHxVBRe5UDbeEOV1bCeVO0vbIJ/rE4ylZ1OkFMUuquQ3W1jksGPDfOGhZkEaGloKyRbDxLeQIDAQAB" />
-	</plugin>
-	<plugin name="cordova-plugin-admobpro-firebase" source="npm">
-		<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
-		<variable name="ADMOB_APP_ID" value="ca-app-pub-9463460868384198~8273098860" />
 	</plugin>
 
 	<engine name="ios" />
