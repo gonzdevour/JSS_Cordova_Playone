@@ -47,6 +47,9 @@
 			<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
 			<variable name="ADMOB_APP_ID" value="ca-app-pub-9463460868384198~9110703668" />
 		</plugin>
+		<config-file target="*-Info.plist" parent="GADApplicationIdentifier">
+			<string>ca-app-pub-9463460868384198~9110703668</string>
+		</config-file>
 	</platform>
 	<!-- Android only -->
 	<platform name="android">
@@ -134,7 +137,6 @@
 	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
 	<plugin name="cordova-plugin-badge" source="npm" />
 	<plugin name="cordova-plugin-local-notification" source="npm" />
-	<plugin name="cordova-plugin-native-spinner" source="npm" />
 	<plugin name="cordova-plugin-game-center" source="npm" />
 	<plugin name="cordova-plugin-media-capture" />
 	<!-- testing -->
